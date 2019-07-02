@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            width: 300px;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 100px auto;
+            text-align: center;
+        }
+        
+        th {
+            background-color: skyblue;
+            height: 30px;
+        }
+        
+        th,
+        td {
+            border: 1px solid #000;
+        }
+        
+        td {
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="check_all">
+                </th>
+                <th>商品</th>
+                <th>价钱</th>
+            </tr>
+        </thead>
+        <tbody id="follow">
+            <tr>
+                <td>
+                    <input type="checkbox" id="">
+                </td>
+                <td>华为P30</td>
+                <td>6666</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="">
+                </td>
+                <td>魅族666</td>
+                <td>5555</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="">
+                </td>
+                <td>小米666</td>
+                <td>8888</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="">
+                </td>
+                <td>努比亚</td>
+                <td>7777</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="">
+                </td>
+                <td>iPhoneXXX</td>
+                <td>99999</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <script>
+        // 需求 thead中的全选框勾上,tbody中的复选框全部勾上,全选框没勾上,复选框全不勾
+        // tbody中的复选框全部勾上,thead中的全选框也勾上,tbody中有一个复选框没勾上,全选框就不勾
+        // 1.获取元素
+        var check_all = document.querySelector('#check_all');
+        var input = document.querySelector('#follow').querySelectorAll('input');
+
+        // 2.绑定事件
+        // 2.1点击全选框..
+        check_all.addEventListener('click', function(e) {
+            // tbody里面复选框全勾上
+            for (var i = 0; i < input.length; i++) {
+                // 让复选框状态和全选框状态保持一致
+                input[i].checked = check_all.checked;
+            }
+        });
+
+        // 2.2点击复选框..
+        // 遍历 input 元素,找到所有复选框  
+        for (var i = 0; i < input.length; i++) {
+            input[i].addEventListener('click', function(e) {
+                // 假设 全选框 为 true(选中状态)
+                var flag = true;
+
+                for (var i = 0; i < input.length; i++) {
+                    if (input[i].checked == false) {
+                        // 加入 复选框的状态 为 false
+                        // 改变 flag 的赋值
+                        flag = false;
+                    }
+                }
+                // 全选框状态跟随着 falg 值
+                check_all.checked = flag;
+
+            });
+        }
+    </script>
+</body>
+
+</html>

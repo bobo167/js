@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            width: 500px;
+            margin: 100px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        
+        td,
+        th {
+            border: 1px solid #000;
+        }
+        
+        thead tr {
+            height: 40px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <table cellspacing="0">
+
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>科目</th>
+                <th>成绩</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <script>
+        // 动态生成表格
+        // 添加表格元素信息
+        var dates = [{
+            uname: '小明',
+            subject: 'JS',
+            score: 18,
+        }, {
+            uname: '小红',
+            subject: 'JS',
+            score: 50,
+        }, {
+            uname: '小绿',
+            subject: 'JS',
+            score: 100,
+        }, {
+            uname: '小蓝',
+            subject: 'JS',
+            score: 79,
+        }, {
+            uname: '小白',
+            subject: 'JS',
+            score: 0,
+        }, ];
+        // dates 中每个元素都是 对象元素
+
+        // 1.获取元素
+        var tbody = document.querySelector('tbody');
+        var tr = document.querySelector('tbody').querySelectorAll('tr');
+
+        // 2.添加 学生信息 到 thead 下的表格中
+        // 遍历数组元素
+        for (var i = 0; i < dates.length; i++) {
+            // 2.1 创建 thead 下的节点元素 tr
+            var trs = document.createElement('tr');
+            // 添加节点元素
+            tbody.appendChild(trs);
+
+            // 将数组中 对象元素的 属性值 添加给 tbody--tr--td
+            // 定义变量  dates 中的 每个 对象元素
+            var obj = dates[i];
+            // 遍历对象
+            for (var k in obj) {
+                // console.log(k);  // 属性名
+                // console.log(obj[k]); // 属性值
+                // 创建 td 节点     
+                var tds = document.createElement('td');
+                // 添加节点
+                trs.appendChild(tds);
+                // 给每个 td 赋值 
+                tds.innerHTML = obj[k];
+            }
+            // 给每一行 tr 添加 td('删除') 节点
+            var tds = document.createElement('td');
+            // 创建节点
+            trs.appendChild(tds);
+            // 添加内容
+            tds.innerHTML = '<a href="javascript:;">删除</a>';
+        }
+        // 点击每一行的 a(删除) 元素,删除当前  a元素 所在行
+        var all_a = document.querySelectorAll('a');
+        // 删除当前行
+        // 遍历 a 元素
+        for (var i = 0; i < all_a.length; i++) {
+            点击
+            all_a[i].addEventListener('click', function(e) {
+
+                // 删除tbody的子元素 --> 当前 a -- 父元素(td) -- 父元素(tr)
+                tbody.removeChild(this.parentNode.parentNode);
+            });
+
+        }
+    </script>
+</body>
+
+</html>

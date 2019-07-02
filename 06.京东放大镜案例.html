@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            position: relative;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+        }
+        
+        .small {
+            width: 300px;
+        }
+        
+        .small_box {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+            opacity: .3;
+        }
+        
+        .big_box {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 330px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        
+        .bigImg {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="./images/b3.png" alt="" class="small">
+        <div class="small_box"></div>
+        <div class="big_box">
+            <img src="./images/big.jpg" alt="" class="bigImg">
+        </div>
+    </div>
+    <script>
+        // 鼠标移动到 box 盒子时..显示 small_box盒子 和 big_box 盒子,鼠标移出则隐藏
+        // small_box盒子 跟随鼠标移动而移动,同时 big_box 里面的大图片,显示对应图片区域
+        // 1.获取元素
+        var box = document.querySelector('.box');
+        var small_box = document.querySelector('.small_box');
+        var big_box = document.querySelector('.big_box');
+        var bigImg = document.querySelector('.bigImg');
+        // 2.绑定事件
+        // 3.鼠标经过 box盒子..显示 small_box盒子 和 big_box盒子
+        box.addEventListener('mousemove', function(e) {
+            small_box.style.display = 'block';
+            big_box.style.display = 'block';
+        });
+        // 4.鼠标离开 box盒子..隐藏 small_box盒子 和 big_box盒子
+        box.addEventListener('mouseout', function(e) {
+            small_box.style.display = 'none';
+            big_box.style.display = 'none';
+        });
+        // 5.让 small_box盒子 跟随鼠标移动
+        box.addEventListener('mousemove', function(e) {
+            // e.pageX  e.pageY  鼠标在页面的位置
+            var x = e.pageX - box.offsetLeft; // 鼠标离 box盒子 左边的距离
+            var y = e.pageY - box.offsetTop; // 鼠标离 box盒子 顶部的距离
+            // 鼠标在 small_box盒子 内居中
+            var small_box_x = (x - small_box.offsetWidth / 2);
+            var small_box_y = (y - small_box.offsetHeight / 2);
+            // small_box盒子 最大移动距离
+            var small_box_max = box.offsetWidth - small_box.offsetWidth;
+            // 限制 small_box盒子 的移动范围
+            if (small_box_x <= 0) {
+                small_box_x = 0;
+            } else if (small_box_x >= small_box_max) {
+                small_box_x = small_box_max;
+            }
+            if (small_box_y <= 0) {
+                small_box_y = 0;
+            } else if (small_box_y >= small_box_max) {
+                small_box_y = small_box_max;
+            }
+            small_box.style.left = small_box_x + 'px';
+            small_box.style.top = small_box_y + 'px';
+
+            // 6.大盒子图片跟随小黄盒子所在图片位置的移动而移动,按照比例移动
+            // 大图片的移动距离 = 遮挡层移动距离*大图片移动距离 / 遮挡层的最大移动距离
+            // 大图片移动距离
+            var bigImgMax = bigImg.offsetWidth - big_box.offsetWidth;
+            // 大图片移动距离
+            var bigImgX = small_box_x * bigImgMax / small_box_max;
+            var bigImgY = small_box_y * bigImgMax / small_box_max;
+            bigImg.style.left = -bigImgX + 'px';
+            bigImg.style.top = -bigImgY + 'px';
+        });
+    </script>
+</body>
+
+</html>

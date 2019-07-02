@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            height: 150px;
+            background-color: red;
+        }
+        
+        .centent {
+            height: 400px;
+            background-color: green;
+        }
+        
+        .footer {
+            height: 900px;
+            background-color: blue;
+        }
+        
+        .fixed {
+            position: absolute;
+            left: 50%;
+            margin-left: 600px;
+            top: 300px;
+            width: 50px;
+            height: 200px;
+            background-color: pink;
+            text-align: center;
+            z-index: 999;
+        }
+        
+        a {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+            width: 40px;
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header w"></div>
+    <div class="centent w"></div>
+    <div class="footer w"></div>
+    <div class="fixed">
+        <a href="javascript:;">返回顶部</a>
+    </div>
+
+    <script>
+        // 页面卷入部分 超过header 右侧定位框变为固定定位,不随任务栏滚动而滚动
+        // 页面卷入部分 超过centent 右侧定位栏中显示 返回顶部
+        // 1.获取元素
+        var header = document.querySelector('.header');
+        var centent = document.querySelector('.centent');
+        var footer = document.querySelector('.footer');
+        var fixed = document.querySelector('.fixed');
+        var a = document.querySelector('a');
+        var fixedTop = fixed.offsetTop - centent.offsetTop;
+        // 2.绑定事件  页面滚动时..
+        document.addEventListener('scroll', function(e) {
+            // fixed.offsetTop  固定框距离页面顶部的高度
+            // centent.offsetTop  centent盒子距离页面顶部的高度
+            // window.pageYOffset 页面被卷去的部分
+
+            if (window.pageYOffset >= centent.offsetTop) {
+                // 页面卷去部分 大于等于 centent盒子距离页面顶部的 高度时
+                // fixed盒子 改为 固定定位
+                fixed.style.position = 'fixed';
+                // 修改 fixed盒子 距离页面顶部的距离
+                fixed.style.top = fixedTop + 'px';
+            } else if (window.pageXOffset < centent.offsetTop) {
+                // 页面卷去部分 小于 centent盒子距离页面距离的 高度时
+                // fixed盒子 改为 绝对定位
+                fixed.style.position = 'absolute';
+                // 修改 fixed盒子 距离页面顶部的距离
+                fixed.style.top = '300px';
+            }
+            // 页面滚动距离超过 footer.offsetTop 时..
+            if (window.pageYOffset >= footer.offsetTop) {
+                // 显示a元素 
+                a.style.display = 'block';
+            } else {
+                // 隐藏a元素
+                a.style.display = 'none';
+            }
+        });
+        // 点击 a元素 回到顶部
+        a.addEventListener('click', function(e) {
+            window.scroll(0, 0);
+        });
+    </script>
+</body>
+
+</html>

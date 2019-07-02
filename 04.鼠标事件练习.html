@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        div {
+            width: 200px;
+            height: 100px;
+            margin-top: 30px;
+        }
+        
+        .red {
+            position: relative;
+            top: 0;
+            left: 0;
+            background-color: red;
+        }
+        
+        input {
+            outline: none;
+        }
+        /* span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            vertical-align: middle;
+            text-align: center;
+        } */
+        
+        img {
+            width: 20px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="password">
+    <img src="images/open.png" alt="">
+    <div class="red">1</div>
+    <script>
+        // 1.获取元素
+        var span = document.querySelector('span');
+        var red = document.querySelector('.red');
+        var img = document.querySelector('img');
+        // 2.绑定事件
+        // 定义一个变量 实现来回点击切换 
+        var flag = true;
+        img.addEventListener('click', function(e) {
+            if (flag) {
+                input.type = 'text';
+                img.src = 'images/close.png';
+                flag = false;
+            } else {
+                input.type = 'password';
+                img.src = 'images/open.png';
+                flag = true;
+            }
+        });
+    </script>
+</body>
+
+</html>

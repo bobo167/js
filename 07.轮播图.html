@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        div {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 721px;
+            height: 455px;
+            /* border: 1px solid #000; */
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        
+        .arr_l,
+        .arr_r {
+            display: none;
+            position: absolute;
+            top: 50%;
+            margin-top: -15px;
+            width: 20px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid rgba(255, 255, 255, .3);
+            text-align: center;
+            color: #fff;
+            background-color: rgba(0, 0, 0, .3);
+            z-index: 999;
+        }
+        
+        .arr_l {
+            left: 0;
+        }
+        
+        .arr_r {
+            right: 0;
+        }
+        
+        span {
+            position: absolute;
+            top: 7px;
+            left: -2px;
+            width: 15px;
+            height: 15px;
+            border-top: 1px solid #fff;
+            border-right: 1px solid #fff;
+            transform: rotate(45deg);
+        }
+        
+        .arr_l span {
+            transform: rotate(-135deg);
+            left: 5px;
+        }
+        
+        ul {
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 600%;
+        }
+        
+        ul li {
+            float: left;
+        }
+        
+        ol {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 90px;
+            /* height: 10px; */
+            /* background-color: pink; */
+        }
+        
+        ol li {
+            float: left;
+            width: 8px;
+            height: 8px;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .current {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="javascript:;" class="arr_l"><span></span></a>
+        <a href="javascript:;" class="arr_r"><span></span></a>
+        <ul class="focus">
+            <li><img src="./images/focus.jpg" alt=""></li>
+            <li><img src="./images/focus1.jpg" alt=""></li>
+            <li><img src="./images/focus2.jpg" alt=""></li>
+            <li><img src="./images/focus3.jpg" alt=""></li>
+            <li><img src="./images/focus.jpg" alt=""></li>
+        </ul>
+        <ol class="circle">
+            <li class="current"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+    </div>
+    <script>
+        // 鼠标经过div时,显示 左右箭头和下面小圆圈,鼠标移出时,隐藏 左右箭头和小圆圈
+        // 点击左右箭头实现图片切换
+        // 点击小圆圈出现对象图片
+        // 出现第几张图片,下面小圆圈对应背景颜色发生变化
+        // 1.获取元素
+        var div = document.querySelector('div');
+        var arr_l = document.querySelector('.arr_l');
+        var arr_r = document.querySelector('.arr_r');
+        var focus = document.querySelector('.focus');
+        var circle = document.querySelector('.circle');
+        // 2.绑定事件
+        // 鼠标经过div时..显示 左右箭头和小圆圈
+        div.addEventListener('mousemove', function(e) {
+            arr_l.style.display = 'block';
+            arr_r.style.display = 'block';
+            circle.style.display = 'block';
+        });
+        // 鼠标移出div时..隐藏 左右箭头和小圆圈
+        div.addEventListener('mouseout', function(e) {
+            arr_l.style.display = 'none';
+            arr_r.style.display = 'none';
+            circle.style.display = 'none';
+        });
+        // 3.点击右箭头..实现图片切换
+        // 3.1 定义变量
+        var num = 0;
+        arr_r.addEventListener('mousedown', function(e) {
+            // 限制 focus 的移动范围
+            if (num < focus.children.length - 1) {
+                num++;
+                focus.style.left = -div.offsetWidth * num + 'px';
+                var focusWidth = -div.offsetWidth * (focus.children.length - 1);
+            } else if (focus.style.left == focusWidth) {
+
+            }
+        });
+        // 4.点击左箭头..实现图片切换
+        // 4.1 定义变量
+        arr_l.addEventListener('mousedown', function(e) {
+            // 限制 focus 的移动范围
+            if (num < focus.children.length - 1) {
+                num++;
+                focus.style.left = -div.offsetWidth * num + 'px';
+            }
+        });
+    </script>
+</body>
+
+</html>
